@@ -1,0 +1,39 @@
+window {
+    background-color: rgba(30, 30, 46, 0.5);
+}
+
+button {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 25%;
+    border: 3px solid transparent;
+    background-color: rgba(49, 50, 68, 0.8);
+    border-radius: 20px;
+    margin: 20px;
+    transition: all 0.2s cubic-bezier(.55, 0.0, .28, 1.68);
+    /* This hides the text labels so only icons show */
+    color: transparent;
+    text-shadow: none;
+}
+
+button:focus, button:active, button:hover {
+    background-color: #89b4fa;
+    border: 3px solid #89b4fa;
+}
+
+/* Mapping IDs to system icons */
+#lock {
+    background-image: image(url("/usr/share/wlogout/icons/lock.png"));
+}
+
+#logout {
+    background-image: image(url("/usr/share/wlogout/icons/logout.png"));
+}
+
+#shutdown {
+    background-image: image(url("/usr/share/wlogout/icons/shutdown.png"));
+}
+
+#reboot {
+    background-image: image(url("/usr/share/wlogout/icons/reboot.png"));
+}

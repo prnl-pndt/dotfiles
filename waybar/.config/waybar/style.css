@@ -1,127 +1,84 @@
-@import "mocha.css"; 
+/* Transparency for the Hyprland Blur */
+@define-color mantle    rgba(24, 24, 37, 0.75); 
+@define-color surface2  #585b70;
+@define-color blue      #89b4fa;
+@define-color mauve     #cba6f7;
+@define-color teal      #94e2d5;
+@define-color pink      #f5c2e7;
+@define-color red       #f38ba8;
 
 * {
-    font-family: "JetBrains Mono Nerd Font";
-    font-size: 13px;
-    min-height: 0;
-    font-weight: normal;
+    font-family: "JetBrainsMono Nerd Font", "Roboto", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 window#waybar {
-    background: transparent;
-    background-color: @crust;
-    color: @overlay0;
-    transition-property: background-color;
-    transition-duration: 0.1s;
-    border-bottom: 1px solid @overlay1;
+    background-color: transparent;
 }
 
-#window {
-    margin: 8px;
-    padding-left: 8;
-    padding-right: 8;
+/* All three sections get the pill shape and mantle background */
+.modules-left, .modules-center, .modules-right {
+    background-color: @mantle;
+    border-radius: 10px;
+    padding: 1px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-button {
-    box-shadow: inset 0 -3px transparent;
-    border: none;
-    border-radius: 0;
-}
-
-button:hover {
-    background: inherit;
-    color: @mauve;
-    border-top: 2px solid @mauve;
-}
+/* Left Section */
+#custom-weather { color: @blue; margin-left:8px; margin-right: 15px; }
 
 #workspaces button {
-    padding: 0 4px;
-}
-
-#workspaces button.focused {
-    background-color: rgba(0, 0, 0, 0.3);
-    color: @rosewater;
-    border-top: 2px solid @rosewater;
+    /* 1. Reset everything again to be sure */
+    min-height: 22px;
+    min-width: 28px;
+    padding: 0;
+    margin: 2px 0px;
+    
+    /* 2. Tell the button to center its contents */
+    /* These are the closest things to "align-items: center" in GTK CSS */
+    -gtk-icon-shadow: none;
+    text-shadow: none;
+    box-shadow: none;
 }
 
 #workspaces button.active {
-    background-color: rgba(0, 0, 0, 0.3);
-    color: @mauve;
-    border-top: 2px solid @mauve;
-}
-
-#workspaces button.urgent {
-    background-color: #eb4d4b;
-}
-
-#pulseaudio,
-#clock,
-#battery,
-#cpu,
-#memory,
-#disk,
-#temperature,
-#backlight,
-#wireplumber,
-#tray,
-#network,
-#mode,
-#scratchpad {
-  margin-top: 2px;
-  margin-bottom: 2px;
-  margin-left: 4px;
-  margin-right: 4px;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#clock {
-    color: @maroon;
-    border-bottom: 2px solid @maroon;
-}
-
-#clock.date {
-    color: @mauve;
-    border-bottom: 2px solid @mauve;
-}
-
-#pulseaudio {
     color: @blue;
-    border-bottom: 2px solid @blue;
 }
 
-#network {
-    color: @yellow;
-    border-bottom: 2px solid @yellow;
+#workspaces button label {
+    /* 3. This is the magic property for GTK labels */
+    /* It forces the label to be centered regardless of button size */
+    -gtk-icon-transform: translate(0, 0);
+    margin: 0;
+    padding: 0;
+    
+    /* Force the label widget to expand and center its text */
+    min-width: 28px;
+    
+    font-size: 16px; 
+    font-family: "JetBrainsMono Nerd Font Mono";
 }
 
-#idle_inhibitor {
-    margin-right: 12px;
-    color: #7cb342;
+/* A dedicated rule for the label to force it to center */
+#workspaces label {
+    /* In some Waybar versions, this is the only thing that works */
+    text-shadow: 0 0 transparent; 
 }
 
-#idle_inhibitor.activated {
-    color: @red;
+#workspaces button:hover {
+    color: @blue;
 }
 
-#battery {
-    color: @green;
-    border-bottom: 2px solid @green;
-}
 
-/* If workspaces is the leftmost module, omit left margin */
-.modules-left>widget:first-child>#workspaces {
-    margin-left: 0;
-}
+#mpris { color: @mauve; margin-left: 15px; }
 
-/* If workspaces is the rightmost module, omit right margin */
-.modules-right>widget:last-child>#workspaces {
-    margin-right: 0;
-}
+/* Center Section */
+#custom-user { color: @mauve; }
 
-#custom-vpn {
-    color: @lavender;
-    border-radius: 15px;
-    padding-left: 6px;
-    padding-right: 6px;
-}
+/* Right Section */
+#network     { color: @teal;  margin-right: 15px; }
+#bluetooth   { color: @blue;  margin-right: 15px; }
+#pulseaudio  { color: @pink;  margin-right: 15px; }
+#clock       { color: @mauve; margin-right: 15px; }
+#custom-power { color: @red; }
