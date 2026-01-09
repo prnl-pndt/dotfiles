@@ -1,84 +1,86 @@
-/* Transparency for the Hyprland Blur */
-@define-color mantle    rgba(24, 24, 37, 0.75); 
-@define-color surface2  #585b70;
-@define-color blue      #89b4fa;
-@define-color mauve     #cba6f7;
-@define-color teal      #94e2d5;
-@define-color pink      #f5c2e7;
-@define-color red       #f38ba8;
+@import "mocha.css";
 
 * {
-    font-family: "JetBrainsMono Nerd Font", "Roboto", sans-serif;
-    font-size: 14px;
+    font-family: "JetBrainsMono Nerd Font";
     font-weight: bold;
+    font-size: 11px;
+    border: none;
+    border-radius: 0;
 }
 
 window#waybar {
     background-color: transparent;
 }
 
-/* All three sections get the pill shape and mantle background */
-.modules-left, .modules-center, .modules-right {
-    background-color: @mantle;
-    border-radius: 10px;
-    padding: 1px 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+/* Base style for ALL boxes - Vertical padding (3px) now controls the height */
+#custom-launcher, 
+#workspaces, 
+#clock, 
+#pulseaudio, 
+#network, 
+#memory, 
+#backlight, 
+#battery {
+    background-color: @base;
+    color: @text;
+    margin: 2px 2px;
+    padding: 3px 10px; 
+    border: 1px solid @surface1;
 }
 
-/* Left Section */
-#custom-weather { color: @blue; margin-left:8px; margin-right: 15px; }
+/* Arch Launcher - Centering, Height Correction & Added Gray Border */
+#custom-launcher {
+    background-color: @red;
+    color: @base;
+    border: 1px solid @surface1; /* Added the gray border to match others */
+    /* Adjusted horizontal padding to nudge logo 2px left */
+    padding: 3px 12px 3px 9px; 
+    margin-right: 4px;
+}
+
+/* Colors from Mocha palette */
+#clock { border: 1px solid @red; }
+#pulseaudio { border: 1px solid @blue; color: @blue; }
+#network    { border: 1px solid @yellow; color: @yellow; }
+#memory     { border: 1px solid @red; color: @red; }
+#backlight  { border: 1px solid @green; color: @green; }
+#battery    { border: 1px solid @mauve; color: @mauve; }
+
+/* Workspace Container Styling */
+#workspaces {
+    padding: 0 5px;
+}
 
 #workspaces button {
-    /* 1. Reset everything again to be sure */
-    min-height: 22px;
-    min-width: 28px;
-    padding: 0;
-    margin: 2px 0px;
-    
-    /* 2. Tell the button to center its contents */
-    /* These are the closest things to "align-items: center" in GTK CSS */
-    -gtk-icon-shadow: none;
-    text-shadow: none;
-    box-shadow: none;
+    padding: 0 5px;
+    color: @overlay0;
+    margin: 0;
 }
 
 #workspaces button.active {
-    color: @blue;
+    color: @red;
+    border-bottom: 2px solid @red;
 }
 
-#workspaces button label {
-    /* 3. This is the magic property for GTK labels */
-    /* It forces the label to be centered regardless of button size */
-    -gtk-icon-transform: translate(0, 0);
-    margin: 0;
-    padding: 0;
-    
-    /* Force the label widget to expand and center its text */
-    min-width: 28px;
-    
-    font-size: 16px; 
-    font-family: "JetBrainsMono Nerd Font Mono";
+#workspaces button.urgent {
+    background-color: @red;
+    color: @base;
 }
 
-/* A dedicated rule for the label to force it to center */
-#workspaces label {
-    /* In some Waybar versions, this is the only thing that works */
-    text-shadow: 0 0 transparent; 
+/* Battery Blink Animation */
+#battery.critical:not(.charging) {
+    background-color: @red;
+    color: @text;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: steps(12);
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
 }
 
-#workspaces button:hover {
-    color: @blue;
+@keyframes blink {
+    to {
+        background-color: @text;
+        color: @base;
+    }
 }
-
-
-#mpris { color: @mauve; margin-left: 15px; }
-
-/* Center Section */
-#custom-user { color: @mauve; }
-
-/* Right Section */
-#network     { color: @teal;  margin-right: 15px; }
-#bluetooth   { color: @blue;  margin-right: 15px; }
-#pulseaudio  { color: @pink;  margin-right: 15px; }
-#clock       { color: @mauve; margin-right: 15px; }
-#custom-power { color: @red; }

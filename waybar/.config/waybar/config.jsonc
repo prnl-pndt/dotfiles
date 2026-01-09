@@ -1,77 +1,77 @@
 {
     "layer": "top",
     "position": "top",
-    "mod": "dock",
-    "exclusive": true,
-    "passthrough": false,
-    "gtk-layer-shell": true,
     "height": 32,
-    "margin": "10 10 0 10",
+    "spacing": 4, 
+    "margin-top": 10,
+    "margin-left": 10,
+    "margin-right": 10,
 
-    "modules-left": ["custom/weather", "hyprland/workspaces", "mpris"],
-    "modules-center": ["custom/user"], // MOVED TO CENTER
-    "modules-right": ["network", "bluetooth", "pulseaudio", "clock", "custom/power"],
+    "modules-left": [
+        "custom/launcher",
+        "hyprland/workspaces"
+    ],
 
-    "custom/weather": {
-        "format": "{}",
-        "tooltip": true,
-        "interval": 3600,
-        "exec": "bash /home/praneel/.config/waybar/scripts/weather.sh",
-        "return-type": "json"
+    "modules-center": [
+        "clock"
+    ],
+
+    "modules-right": [
+        "pulseaudio",
+        "network",
+        "memory",
+        "backlight",
+        "battery"
+    ],
+
+    "custom/launcher": {
+        "format": "󰣇",
+        "on-click": "fuzzel",
+        "on-click-right": "killall fuzzel"
     },
 
     "hyprland/workspaces": {
-    "format": "{icon}",
-    "format-icons": {
-        "active": "●",
-        "default": "○"
-        // If it's too far right, try: " <span font='2'> </span>●"
-        // If it's too far left, try: "●<span font='2'> </span> "
-    }
-    },
-
-    "mpris": {
-        "format": "{player_icon}  {artist} - {title}",
-        "format-paused": "{status_icon}  {artist} - {title}",
-        "player-icons": { "default": "", "playing": "", "paused": "" },
-        "max-length": 30
-    },
-
-    "custom/user": {
-        "exec": "echo \"$(whoami) | ($(uptime -p | sed 's/up //;s/ hours,/hr/;s/ minutes/mins/'))\"",
-        "format": "  {}",
-        "interval": 60
-    },
-
-    "network": {
-        "format-wifi": "  {essid} ({ipaddr})", // WiFi Name + IP
-        "format-ethernet": "  {ipaddr}",
-        "format-disconnected": "󰖪",
-        "tooltip-format": "{ifname} via {gwaddr}"
-    },
-
-    "bluetooth": {
-        "format": "",
-        "format-disabled": "󰂲", 
-        "format-connected": "󰂱",
-        "on-click": "blueman-manager"
-    },
-
-    "pulseaudio": {
-        "format": "{icon}  {volume}%",
-        "format-muted": "",
-        "format-icons": { "default": ["", "", ""] },
-        "on-click": "pwvucontrol"
+        "format": "{name}",
+        "on-click": "activate"
     },
 
     "clock": {
-        "format": "  {:%H:%M}",
-        "tooltip-format": "<tt>{calendar}</tt>"
+        "format": " {:%a %d | %H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
 
-    "custom/power": {
-      "format": "",
-      "on-click": "wlogout -b 2", // -b 2 opens wlogout in 2 columns
-      "tooltip": false
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "󰝟",
+        "format-icons": {
+            "headphone": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pwvucontrol",
+    },
+
+    "network": {
+        "format-wifi": " {essid}",
+        "format-disconnected": "󰤮",
+        "interval": 5
+    },
+
+    "memory": {
+        "format": "󰍛 {used:0.1f}GB",
+        "interval": 2
+    },
+
+    "backlight": {
+        "format": "{icon} {percent}%",
+        "format-icons": ["", "", "", "", "", "", "", "", ""]
+    },
+
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-icons": ["", "", "", "", ""]
     }
 }
